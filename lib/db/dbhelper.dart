@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../model/category_searchby_college_letter_model_model.dart';
 import '../model/college_model.dart';
 
 class DbHelper {
@@ -9,7 +10,8 @@ class DbHelper {
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllCategories() =>
-      _db.collection(collectionCategory).snapshots();
+      _db.collection(collectionCategory)
+          .orderBy(searchCategoryLetter,descending: false).snapshots();
 
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllColleges() =>
       _db.collection(collectionCollege).snapshots();
@@ -25,7 +27,7 @@ class DbHelper {
       getAllSearchedCollegeByName(String searchProvider) =>
       _db
           .collection(collectionCollege)
-          .where(collegeName, isEqualTo: searchProvider.toLowerCase())
+          .where(collegeName.toLowerCase(), isEqualTo: searchProvider.toLowerCase())
           .orderBy('$collegeName asc')
           .snapshots();
 }
