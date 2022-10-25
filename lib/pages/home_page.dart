@@ -128,37 +128,79 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               height: 10,
             ),
-            SizedBox(
-              height: 70,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: provider.categoryNameList.length,
+
+            Expanded(
+              child: GridView.builder(
+                padding: const EdgeInsets.all(8),
+                gridDelegate:
+                const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 6,
+                    crossAxisSpacing: 2,
+                    mainAxisSpacing: 2,
+                    childAspectRatio: 1.5),
+                itemCount: provider.categoryList.length,
                 itemBuilder: (context, index) {
-                  final catName = provider.categoryNameList[index];
-                  return Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: ChoiceChip(
-                      labelStyle: TextStyle(
-                          color:
-                              chipValue == index ? Colors.white : Colors.black),
-                      selectedColor: Theme.of(context).primaryColor,
-                      label: Text(catName),
-                      selected: chipValue == index,
-                      onSelected: (value) {
-                        setState(() {
-                          chipValue = value ? index : null;
-                        });
-                        if (chipValue != null && chipValue != 0) {
-                          provider.getAllCollegesByCategory(catName);
-                        } else if (chipValue == 0) {
-                          provider.getAllCollege();
-                        }
+                  final category = provider.categoryList[index];
+                  return Center(
+                    child: InkWell(
+                      onTap: (){
+                        provider.getAllCollegesByCategory(category.letter!);
                       },
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Text(category.letter!,),
+                        ),
+                      ),
                     ),
                   );
                 },
               ),
             ),
+            
+            
+            
+            
+            
+            
+            
+            
+            // SizedBox(
+            //   height: 70,
+            //   child: ListView.builder(
+            //     scrollDirection: Axis.horizontal,
+            //     itemCount: provider.categoryNameList.length,
+            //     itemBuilder: (context, index) {
+            //       final catName = provider.categoryNameList[index];
+            //       return Padding(
+            //         padding: const EdgeInsets.all(4.0),
+            //         child: ChoiceChip(
+            //           labelStyle: TextStyle(
+            //               color:
+            //                   chipValue == index ? Colors.white : Colors.black),
+            //           selectedColor: Theme.of(context).primaryColor,
+            //           label: Text(catName),
+            //           selected: chipValue == index,
+            //           onSelected: (value) {
+            //             setState(() {
+            //               chipValue = value ? index : null;
+            //             });
+            //             if (chipValue != null && chipValue != 0) {
+            //               provider.getAllCollegesByCategory(catName);
+            //             } else if (chipValue == 0) {
+            //               provider.getAllCollege();
+            //             }
+            //           },
+            //         ),
+            //       );
+            //     },
+            //   ),
+            // ),
+            
+            
+            
+            
+            
             Divider(
               height: 3,
             ),
